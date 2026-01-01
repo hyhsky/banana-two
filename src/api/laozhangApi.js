@@ -65,34 +65,29 @@ export const compressImage = (file, maxWidth = 1024, maxHeight = 1024, quality =
 
 /**
  * 将 Base64 图片上传并获取 URL
- * 通过后端 API 中转，绕过 CORS 限制
+ * 【重磅更新】：直接在前端请求 ImgBB，不再经过 Vercel 后端中转，彻底解决 500 报错。
  */
 export const uploadImage = async (base64) => {
   try {
-    // 调用后端上传接口
-    // 开发环境：需要先启动后端服务（vercel dev）
-    // 生产环境：部署到 Vercel 后自动使用正确的域名
-    const uploadUrl = process.env.NODE_ENV === 'production'
-      ? '/api/upload'  // 生产环境使用相对路径
-      : 'http://localhost:3000/api/upload';  // 开发环境
+    const IMGBB_API_KEY = '983792cb00fcc07ce22956cf5174092b';
+    const formData = new FormData();
+    formData.append('image', base64);
 
-    const response = await axios.post(uploadUrl, {
-      base64: base64
-    }, {
+    const response = await axios.post(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, formData, {
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'multipart/form-data'
       },
       timeout: 30000
     });
 
-    if (response.data && response.data.success && response.data.url) {
-      return response.data.url;
+    if (response.data && response.data.success && response.data.data && response.data.data.url) {
+      return response.data.data.url;
     }
 
-    throw new Error('后端上传失败');
+    throw new Error('ImgBB 返回数据异常');
   } catch (error) {
     console.error('Upload Error:', error.response?.data || error.message);
-    throw new Error('上传参考图失败：' + (error.response?.data?.message || error.message));
+    throw new Error('上传参考图失败：' + (error.response?.data?.error?.message || error.message));
   }
 };
 
