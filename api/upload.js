@@ -30,7 +30,8 @@ module.exports = async (req, res) => {
         const formData = new FormData();
         formData.append('image', buffer.toString('base64'));
 
-        const IMGBB_API_KEY = '5739828236f01da06a45ef88da029b3a';
+        // 直接使用 API Key，确保在 Vercel 环境下 100% 可用
+        const IMGBB_API_KEY = '983792cb00fcc07ce22956cf5174092b';
         const uploadUrl = `https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`;
 
         const response = await axios.post(uploadUrl, formData, {
