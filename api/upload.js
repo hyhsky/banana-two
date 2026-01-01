@@ -1,5 +1,5 @@
 export default async function handler(req, res) {
-    // 设置 CORS
+    // 设置 CORS 响应头
     res.setHeader('Access-Control-Allow-Credentials', true);
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
@@ -22,23 +22,23 @@ export default async function handler(req, res) {
         // 剔除前缀
         const cleanBase64 = base64.replace(/^data:image\/\w+;base64,/, "");
 
-        // 使用 freeimage.host 的免费 API（无需 Key）
-        const response = await fetch('https://freeimage.host/api/1/upload', {
+        // 使用您刚提供的第一个新 Key
+        const apiKey = 'bd521134b0e14ad15cf962e2d002544e';
+
+        // 发送到 ImgBB
+        const response = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams({
-                key: '6d207e02198a847aa98d0a2a901485a5', // 公共免费 key
-                source: cleanBase64,
-                format: 'json'
-            })
+            body: new URLSearchParams({ image: cleanBase64 })
         });
 
         const data = await response.json();
 
-        if (data.success && data.image && data.image.url) {
-            return res.status(200).json({ success: true, url: data.image.url });
+        if (data.success) {
+            return res.status(200).json({ success: true, url: data.data.url });
         } else {
-            return res.status(500).json({ success: false, error: data });
+            console.error('ImgBB Error:', data);
+            return res.status(500).json({ success: false, error: data.error });
         }
     } catch (error) {
         return res.status(500).json({ success: false, message: error.message });
