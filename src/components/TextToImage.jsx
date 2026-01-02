@@ -5,8 +5,10 @@ import './TextToImage.css';
 
 const ASPECT_RATIOS = [
     { value: '1:1', label: '1:1 (正方形)' },
-    { value: '16:9', label: '16:9 (横向)' },
-    { value: '9:16', label: '9:16 (竖向)' },
+    { value: '16:9', label: '16:9 (横屏)' },
+    { value: '9:16', label: '9:16 (竖屏)' },
+    { value: '3:2', label: '3:2 (横屏)' },
+    { value: '2:3', label: '2:3 (竖屏)' },
     { value: '4:3', label: '4:3 (横向)' },
     { value: '3:4', label: '3:4 (竖向)' },
 ];

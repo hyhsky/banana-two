@@ -148,12 +148,25 @@
     }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
     .mode-grid {
         grid-template-columns: 1fr;
     }
 
     .images-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .radio-group {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+    }
+
+    .radio-custom {
+        width: 100%;
+        text-align: center;
+        padding: 8px 4px;
+        font-size: 0.75rem;
     }
 }

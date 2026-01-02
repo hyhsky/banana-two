@@ -187,3 +187,19 @@
         grid-template-columns: 1fr;
     }
 }
+
+@media (max-width: 768px) {
+    .radio-group {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+    }
+
+    .radio-custom {
+        width: 100%;
+        text-align: center;
+        padding: 8px 4px;
+        font-size: 0.75rem;
+        /* 在极窄屏幕下缩小字体 */
+    }
+}
