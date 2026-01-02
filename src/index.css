@@ -322,7 +322,7 @@ body::before {
 }
 
 .spinner {
-  animation: spin 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation: spin 2s linear infinite;
 }
 
 .skeleton-loading {
@@ -350,8 +350,8 @@ body::before {
   width: 64px !important;
   height: 64px !important;
   color: var(--color-accent) !important;
-  filter: drop-shadow(0 0 10px rgba(102, 126, 234, 0.4));
-  animation: spin 1s cubic-bezier(0.4, 0, 0.2, 1) infinite, pulse 2s ease-in-out infinite;
+  filter: drop-shadow(0 0 15px rgba(102, 126, 234, 0.6));
+  animation: spin 3s linear infinite, pulse 3s ease-in-out infinite;
 }
 
 .loading-text-dynamic {
