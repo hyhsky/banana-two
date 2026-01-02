@@ -13,14 +13,6 @@
 
 ---
 
-## 2. 身份验证 (Authentication)
-
-速创 API 采用 Key 鉴权。为了确保最高兼容性，本项目在调用时同时使用了两种方式：
-
-1. **Query 参数**: 在 URL 后拼接 `?key=tLdPCRBfuA4nK1Exu9h9lNh2a6`
-2. **请求头 (Headers)**: 在 Header 中添加 `Authorization: tLdPCRBfuA4nK1Exu9h9lNh2a6`
-
-> **当前生效 Key**: `tLdPCRBfuA4nK1Exu9h9lNh2a6`
 
 ---
 
