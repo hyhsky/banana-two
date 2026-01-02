@@ -111,11 +111,18 @@ const generateContent = async ({ prompt, images = [], aspectRatio, resolution })
   // 处理参考图
   if (images && images.length > 0) {
     const imageUrls = await Promise.all(images.map(async img => {
+      // 如果已经是公网 URL，直接返回
       if (typeof img === 'string' && img.startsWith('http')) return img;
-
-      let base64ToUpload = img;
-      if (img.startsWith('data:')) base64ToUpload = img.split(',')[1];
-      return await uploadImage(base64ToUpload);
+      
+      // 如果是 Base64 (带前缀或不带前缀)，直接组合成 API 要求的格式
+      // 注意：GRSAI 文档通常支持 data:image/... 格式或纯 base64
+      // 这里我们为了兼容性，统一确保它是带 data:image/jpeg;base64, 前缀的格式，或者按文档直接传
+      if (typeof img === 'string' && img.startsWith('data:')) {
+        return img;
+      }
+      
+      // 如果是纯 Base64 (来自 compressImage)，补充前缀
+      return `data:image/jpeg;base64,${img}`;
     }));
     body.urls = imageUrls;
   }
